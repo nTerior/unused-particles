@@ -1,8 +1,8 @@
-#include <iostream>
-
-#include "imgui.h"
+#include "window/Window.h"
 
 int main() {
-    std::cout << "Hello World" << std::endl;
+    Window window;
+    window.startRenderLoop();
+
     return 0;
 }

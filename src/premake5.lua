@@ -12,19 +12,48 @@ project "unused-particles"
     }
 
     includedirs{
-        "%{IncludeDir.imgui}"
+        ".",
+        "%{IncludeDir.imgui}",
+        "%{IncludeDir.SFML}"
+    }
+
+    libdirs {
+        "%{LibDir.SFML}"
     }
 
     links {
-        "imgui"
+        "imgui",
+        -- SFML Dependencies
+        "opengl32",
+        "freetype",
+        "winmm",
+        "gdi32"
     }
 
     filter "configurations:Debug"
-		defines "_UNP_DEBUG"
+		defines {
+            "_UNP_DEBUG",
+            "SFML_STATIC"
+        }
 		runtime "Debug"
 		symbols "on"
 
+        links {
+            "sfml-graphics-s-d",
+            "sfml-window-s-d",
+            "sfml-system-s-d"
+        }
+
 	filter "configurations:Release"
-		defines "_UNP_RELEASE"
+        defines {
+            "_UNP_RELEASE",
+            "SFML_STATIC"
+        }
 		runtime "Release"
 		optimize "on"
+
+        links {
+            "sfml-graphics-s",
+            "sfml-window-s",
+            "sfml-system-s"
+        }

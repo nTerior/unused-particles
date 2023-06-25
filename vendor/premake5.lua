@@ -2,6 +2,10 @@ vendor = "%{wks.location}/vendor/"
 
 IncludeDir = {}
 IncludeDir["imgui"] = "%{vendor}/imgui"
+IncludeDir["SFML"] = "%{vendor}/SFML/include"
+
+LibDir = {}
+LibDir["SFML"] = "%{vendor}/SFML/lib"
 
 project "imgui"
     location "imgui"
