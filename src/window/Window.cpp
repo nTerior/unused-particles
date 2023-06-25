@@ -31,6 +31,10 @@ void Window::startRenderLoop()
 			// "close requested" event: we close the window
 			if (event.type == sf::Event::Closed)
 				m_Window.close();
+			if (event.type == sf::Event::Resized) {
+				sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+				m_Window.setView(sf::View(visibleArea));
+			}
 		}
 	}
 }
