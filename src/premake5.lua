@@ -8,12 +8,16 @@ project "unused-particles"
 
     files {
         "**.cpp",
-        "**.h"
+        "**.h",
+        "%{vendor}/imgui-sfml/imgui-SFML_export.h",
+        "%{vendor}/imgui-sfml/imgui-SFML.cpp",
+        "%{vendor}/imgui-sfml/imgui-SFML.h",
     }
 
     includedirs{
         ".",
         "%{IncludeDir.imgui}",
+        "%{IncludeDir.imgui_sfml}",
         "%{IncludeDir.SFML}"
     }
 

@@ -2,6 +2,7 @@ vendor = "%{wks.location}/vendor/"
 
 IncludeDir = {}
 IncludeDir["imgui"] = "%{vendor}/imgui"
+IncludeDir["imgui_sfml"] = "%{vendor}/imgui-sfml"
 IncludeDir["SFML"] = "%{vendor}/SFML/include"
 
 LibDir = {}
@@ -28,6 +29,8 @@ project "imgui"
         "imgui/imstb_rectpack.h",
         "imgui/imstb_textedit.h",
         "imgui/imstb_truetype.h",
+
+        "imgui-sfml/imconfig-SFML.h"
     }
 
     filter "system:window"
