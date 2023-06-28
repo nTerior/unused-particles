@@ -67,7 +67,7 @@ void Window::startRenderLoop()
 				sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
 				m_Window.setView(sf::View(visibleArea));
 			}
-			handleEvents(event);
+			handleEvents(event, &m_Window);
 		}
 
 		handleTickEvents(clock.restart());
