@@ -88,8 +88,6 @@ void renderGrid(sf::RenderWindow* window)
 		line[1].position = { x, size.y };
 		window->draw(line, 2, sf::Lines);
 
-		if (i == -0) i = 0;
-
 		num.setPosition({x + 5, numPosY});
 		num.setString(formatFloat(i, spaces));
 		window->draw(num);
@@ -107,8 +105,6 @@ void renderGrid(sf::RenderWindow* window)
 		line[1].color = i == 0 ? colorEmphasis : color;
 		line[1].position = { size.x, y };
 		window->draw(line, 2, sf::Lines);
-
-		if (i == -0) i = 0;
 
 		num.setPosition({ numPosX, y });
 		num.setString(formatFloat(i, spaces));
