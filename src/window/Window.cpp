@@ -1,6 +1,9 @@
 #include "Window.h"
 
 #include "display/Grid.h"
+#include "hud/Hud.h"
+#include "events/events.h"
+#include "Settings.h"
 
 #include "imgui.h"
 #include "imgui-SFML.h"
@@ -9,8 +12,9 @@
 
 #include "SFML/System.hpp"
 
-Window::Window() : m_Window(sf::RenderWindow(sf::VideoMode(1200, 720), "unused-particles")) {
+Window::Window() : m_Window(sf::RenderWindow(sf::VideoMode(1200, 720), "unused-particles")) { 
 	m_Window.setVerticalSyncEnabled(true);
+	Settings::originPos = sf::Vector2f{ 1200.f, 720.f } / 2.f;
 }
 
 void Window::renderLoop(sf::RenderWindow* window)
@@ -21,16 +25,18 @@ void Window::renderLoop(sf::RenderWindow* window)
 
 	ImGuiIO& io = ImGui::GetIO();
 	io.Fonts->Clear();
-	io.Fonts->AddFontFromMemoryCompressedTTF(roboto_compressed_data, roboto_compressed_size, 20);
+	io.Fonts->AddFontFromMemoryTTF(roboto_data, roboto_size, 20);
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui::SFML::UpdateFontTexture();
 
 	window->setActive(true);
+
 	sf::Clock delta;
 	while (window->isOpen()) {
-		ImGui::SFML::Update(*window, delta.restart());
+		auto deltaTime = delta.restart();
+		ImGui::SFML::Update(*window, deltaTime);
 		// ImGui Stuff
-		ImGui::ShowDemoWindow();
+		renderHud(deltaTime);
 
 		window->clear(sf::Color::Black);
 		// draw stuff
@@ -39,6 +45,7 @@ void Window::renderLoop(sf::RenderWindow* window)
 		ImGui::SFML::Render(*window);
 		window->display();
 	}
+	window->setActive(false);
 }
 
 void Window::startRenderLoop()
@@ -49,6 +56,7 @@ void Window::startRenderLoop()
 	thread.launch();
 
 	sf::Event event;
+	sf::Clock clock;
 	while (m_Window.isOpen()) {
 		// event handling
 		while (m_Window.pollEvent(event)) {
@@ -59,7 +67,10 @@ void Window::startRenderLoop()
 				sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
 				m_Window.setView(sf::View(visibleArea));
 			}
+			handleEvents(event);
 		}
+
+		handleTickEvents(clock.restart());
 	}
 
 	ImGui::SFML::Shutdown();
